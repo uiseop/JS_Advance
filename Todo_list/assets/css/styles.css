@@ -73,13 +73,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-select,
-input,
-textarea,
-button {
-  -webkit-appearance: none;
-}
-
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -193,4 +186,30 @@ body {
 
 .todos {
   overflow: auto;
+}
+
+.todos .todo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.todos .content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.todos .content .todo_checkbox {
+  transform: scale(2.5);
+  margin-left: 10px;
+}
+
+.todos .content label {
+  font-size: 16px;
+  margin-left: 20px;
+  padding-top: 4px;
+  flex: 1;
 }

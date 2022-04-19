@@ -1,4 +1,33 @@
-# Json-server
+# Day 1
+
+> `json-server`의 편리함을 확인하고, 간단한 CRUD 프로젝트를 제작해본다.
+
+반응형 디자인을 오랜만에 만들어보면서 다시한번 공부하는 시간이 되었다.
+Todo List의 디자인 경우 가운데 작은 노트패드같은 디자인으로 responsive한 width를 잡아주어야만 반응형 디자인이 가능.
+어느정도 통일된 디자인을 제공하기 위해 `min/max- width`를 사용하면서 가변적인 너비를 `width: 50%`로 할당.
+
+디자인적인 요소의 추가 - `box-shadow`에 대한 학습
+```
+/* offset-x | offset-y | color */
+box-shadow: 60px -16px teal;
+
+/* offset-x | offset-y | blur-radius | color */
+box-shadow: 10px 5px 5px black;
+
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+/* inset | offset-x | offset-y | color */
+box-shadow: inset 5em 1em gold;
+
+/* Any number of shadows, separated by commas */
+box-shadow: 3px 3px red, -1em 0 0.4em olive;
+
+출처: https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow
+```
+
+
+## Json-server
 - 실제 배포시에는 사용되지 않고, 프로토타이핑이나 목업 데이터들을 사용한 `fake api` 작성시에 유용하게 사용된다고 한다.
 
 - 혼자하는 프로젝트이기때문에 굳이 Backend까지 혼자 하기엔 프론트엔드를 학습하는데에 효율적이지 못하다는 판단으로 앞으론 요곳을 요긴하게 사용해보도록 한다.
@@ -34,7 +63,7 @@ json-server --watch db.json // json-server를 실행
 
 - json-server를 사용하면 `filter`나 `pagination`같은 기능도 사용할 수 있다고 해. 직접 만들때는 살짞 빡🤯이 쳤던것같았는데 손쉽게 만들 수 있겠다👏👏
 
-# fetch API 정리
+## fetch API 정리
 https://developer.mozilla.org/ko/docs/Web/API/Fetch_API
 
 - AJAX 요청을 하기 위한 기술
@@ -66,7 +95,7 @@ fetch(url, {
 
 ```
 
-# DOMContentLoaded
+## DOMContentLoaded
 
 https://developer.mozilla.org/ko/docs/Web/API/Window/DOMContentLoaded_event
 
@@ -77,3 +106,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed'); // 여기서는 console이 찍히겠군.
 });
 ```
+

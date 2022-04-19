@@ -16,7 +16,7 @@
             <div class="content">
                     <input type="checkbox" class="todo_checkbox" >
                     <label>${content}</label>
-                    <input hidden type="text" value="${content}">
+                    <input class="todo_input" type="text" value="${content}">
                 </div>
                 <div class="item_buttons content_buttons">
                     <button class="todo_edit_button">

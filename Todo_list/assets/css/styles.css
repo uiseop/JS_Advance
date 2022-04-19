@@ -200,10 +200,11 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex: 1;
 }
 
 .todos .content .todo_checkbox {
-  transform: scale(2.5);
+  transform: scale(2.5) translateY(1px);
   margin-left: 10px;
 }
 
@@ -212,4 +213,36 @@ body {
   margin-left: 20px;
   padding-top: 4px;
   flex: 1;
+}
+
+.todos .content .todo_input {
+  display: none;
+  font-size: 16px;
+  margin-left: 20px;
+  flex: 1;
+}
+
+.todos .item_buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.todos .item_buttons button {
+  width: 42px;
+  height: 42px;
+  color: #555;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.todos .item_buttons button:first-child {
+  background-color: #bad4f5;
+}
+
+.todos .item_buttons button + button {
+  margin-top: 4px;
+}
+
+.todos .edit_buttons {
+  display: none;
 }

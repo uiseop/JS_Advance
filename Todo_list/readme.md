@@ -121,3 +121,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
   }
   ```
+
+- 텍스트 수정시 Focus처리
+  - 텍스트 수정 버튼 눌렀을 때 focus() 메서드를 주어도 커서가 맨 앞에 위치함.
+  - 구글링 결과 Input의 value를 비워주고, 다시 채우면 커서가 뒤로 밀려난다고 하는군!  
+
+- 텍스트 수정 취소시 Input데이터
+  - 수정 취소해도 Input이 이전에 변경하던 내용을 담고있음
+  - label의 innerText는 이전의 데이터를 갖고있기때문에 이를 참조함.

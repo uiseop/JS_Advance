@@ -1,17 +1,17 @@
 {
   "todos": [
     {
-      "content": "테스트 1",
-      "completed": true,
+      "content": "테스트 12134",
+      "completed": false,
       "id": 1
     },
     {
-      "content": "테스트 2",
+      "content": "테스트 2324",
       "completed": false,
       "id": 2
     },
     {
-      "content": "테스트 3",
+      "content": "테스트 31342",
       "completed": false,
       "id": 3
     }

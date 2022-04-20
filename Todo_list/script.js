@@ -79,7 +79,7 @@
             .catch((err) => console.error(err));
     };
 
-    const editTodo = (e) => {
+    const toggleTodo = (e) => {
         // console.log(e.target.className)
         if (e.target.className !== "todo_checkbox") return;
         const completed = e.target.checked;
@@ -96,12 +96,59 @@
             .catch((err) => console.error(err));
     };
 
+    const changeMode = (e) => {
+        const $todo = e.target.closest(".todo");
+        const $label = $todo.querySelector("label");
+        const $editInput = $todo.querySelector(".todo_input");
+        const $contentButtons = $todo.querySelector(".content_buttons");
+        const $editButtons = $todo.querySelector(".edit_buttons");
+        const value = $editInput.value;
+        if (e.target.className === "todo_edit_button") {
+            $label.style.display = "none";
+            $editInput.style.display = "block";
+            $contentButtons.style.display = "none";
+            $editButtons.style.display = "flex";
+            $editInput.focus();
+            $editInput.value = "";
+            $editInput.value = value;
+        }
+
+        if (e.target.className === "todo_edit_cancel_button") {
+            $label.style.display = "block";
+            $editInput.style.display = "none";
+            $contentButtons.style.display = "flex";
+            $editButtons.style.display = "none";
+            $editInput.value = $label.innerText;
+        }
+    };
+
+    const editTodo = (e) => {
+        const $todo = e.target.closest(".todo");
+        const id = $todo.dataset.id;
+        const $input = $todo.querySelector(".todo_input");
+        const content = $input.value;
+        if (e.target.className === "todo_edit_confirm_button") {
+            fetch(`${API_URL}/${id}`, {
+                method: "PATCH",
+                body: JSON.stringify({ content }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then(getTodos())
+                .catch((error) => console.error(error));
+        }
+    };
+
     const init = () => {
         window.addEventListener("DOMContentLoaded", () => {
             getTodos();
         });
         $form.addEventListener("submit", addTodo);
+        $todos.addEventListener("click", toggleTodo);
+        $todos.addEventListener("click", changeMode);
         $todos.addEventListener("click", editTodo);
+        $todos.addEventListener("click", removeTodo);
     };
 
     init();

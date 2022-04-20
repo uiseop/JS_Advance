@@ -2,7 +2,7 @@
   "todos": [
     {
       "content": "테스트 1",
-      "completed": false,
+      "completed": true,
       "id": 1
     },
     {

@@ -1,4 +1,4 @@
-# Day 1
+# Todo List
 
 > `json-server`의 편리함을 확인하고, 간단한 CRUD 프로젝트를 제작해본다.
 
@@ -107,3 +107,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 ```
 
+## 문제 기록
+- DOM접근 문제
+  - 개별 checkbox의 class명인 `.todo_checkbox`에 접근하지 못함
+  - `이유`: DOM이 Loaded된 시점에서 비로서 서버와 통신하여 데이터들을 받아오고, `getTodos`함수를 통해 요소들을 만들기 때문에 곧바로 `.todo_checkbox`에 접근하지 못함
+  - 해결: JS의 `이벤트 버블링🐳`을 사용하여 해결하자. 부모 요소 `.todos`에서 이벤트를 처리한다. 
+  ```javascript
+  const editTodo = (e) => {
+    console.log(e.target.className); // className을 통해 어느 요소를 클릭했는지 확인.
+    if (e.target.className === "todo_checkbox") {
+      const $todo = e.target.closest(".todo"); // 자신부터 부모 요소 단위로 출발하여 가장 가까운 .todo 요소를 찾는다.
+      const id = $todo.dataset.id; // dataset으로 지정해서 js에서 불러올 수 있음.
+    }
+  }
+  ```

@@ -140,6 +140,18 @@
         }
     };
 
+    const removeTodo = (e) => {
+        const $todo = e.target.closest(".todo");
+        const id = $todo.dataset.id;
+        if (e.target.className === "todo_remove_button") {
+            fetch(`${API_URL}/${id}`, {
+                method: "DELETE",
+            })
+                .then(getTodos)
+                .catch((err) => console.error(err));
+        }
+    };
+
     const init = () => {
         window.addEventListener("DOMContentLoaded", () => {
             getTodos();

@@ -103,7 +103,7 @@
         const $contentButtons = $todo.querySelector(".content_buttons");
         const $editButtons = $todo.querySelector(".edit_buttons");
         const value = $editInput.value;
-        if (e.target.className === "todo_edit_button") {
+        if (e.target.className === "todo_edit_button" || e.target.classList[0] === "fas") {
             $label.style.display = "none";
             $editInput.style.display = "block";
             $contentButtons.style.display = "none";
@@ -113,7 +113,7 @@
             $editInput.value = value;
         }
 
-        if (e.target.className === "todo_edit_cancel_button") {
+        if (e.target.className === "todo_edit_cancel_button" || e.target.classList[0] === "fas") {
             $label.style.display = "block";
             $editInput.style.display = "none";
             $contentButtons.style.display = "flex";
@@ -127,7 +127,7 @@
         const id = $todo.dataset.id;
         const $input = $todo.querySelector(".todo_input");
         const content = $input.value;
-        if (e.target.className === "todo_edit_confirm_button") {
+        if (e.target.className === "todo_edit_confirm_button" || e.target.classList[0] === "far") {
             fetch(`${API_URL}/${id}`, {
                 method: "PATCH",
                 body: JSON.stringify({ content }),
@@ -143,7 +143,7 @@
     const removeTodo = (e) => {
         const $todo = e.target.closest(".todo");
         const id = $todo.dataset.id;
-        if (e.target.className === "todo_remove_button") {
+        if (e.target.className === "todo_remove_button" || e.target.classList[0] === "far") {
             fetch(`${API_URL}/${id}`, {
                 method: "DELETE",
             })

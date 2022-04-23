@@ -129,3 +129,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 - 텍스트 수정 취소시 Input데이터
   - 수정 취소해도 Input이 이전에 변경하던 내용을 담고있음
   - label의 innerText는 이전의 데이터를 갖고있기때문에 이를 참조함.
+
+- 버튼 클릭 이벤트 범위 수정
+  - 이벤트 버블링의 타겟을 `className === ...`으로 설정하다보니 className 자식요소인 icon을 감지하지 못하는 문제 ➡️ console을 찍어보니 icon클릭에 이벤트를 넣어주지 않음 ➡️ classList[0]으로 접근해서 icon일 경우에도 동일한 이벤트 처리효과를 넣어줌

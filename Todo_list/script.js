@@ -6,9 +6,15 @@
     const $todos = get(".todos");
     const $form = get(".todo_form");
     const $todoInput = get(".todo_input");
-    const $pagination = get(".pagination")
+    const $pagination = get(".pagination");
 
     const API_URL = "http://localhost:3000/todos";
+    let currentPage = 1;
+    const limit = 5;
+    const pageCount = 5;
+    let totalCount;
+
+    const pagination = () => {};
 
     const createTodoElement = (todo) => {
         const { id, content, completed } = todo;
@@ -52,9 +58,18 @@
     };
 
     const getTodos = () => {
-        fetch(API_URL)
-            .then((res) => res.json())
-            .then((todos) => renderAllTodos(todos))
+        fetch(`${API_URL}?_page=${currentPage}&_limit=${limit}`)
+            .then((res) => {
+                console.log(res.headers.entries())
+                const response = [...res.headers];
+                totalCount = response[6][1]
+                console.log(totalCount)
+                return res.json();
+            })
+            .then((todos) => {
+                console.log(todos);
+                return renderAllTodos(todos);
+            })
             .catch((err) => console.error(err));
     };
 
@@ -104,7 +119,10 @@
         const $contentButtons = $todo.querySelector(".content_buttons");
         const $editButtons = $todo.querySelector(".edit_buttons");
         const value = $editInput.value;
-        if (e.target.className === "todo_edit_button" || e.target.classList[2] === "edit") {
+        if (
+            e.target.className === "todo_edit_button" ||
+            e.target.classList[2] === "edit"
+        ) {
             $label.style.display = "none";
             $editInput.style.display = "block";
             $contentButtons.style.display = "none";
@@ -114,7 +132,10 @@
             $editInput.value = value;
         }
 
-        if (e.target.className === "todo_edit_cancel_button" || e.target.classList[2] === "cancel") {
+        if (
+            e.target.className === "todo_edit_cancel_button" ||
+            e.target.classList[2] === "cancel"
+        ) {
             $label.style.display = "block";
             $editInput.style.display = "none";
             $contentButtons.style.display = "flex";
@@ -128,19 +149,22 @@
         const id = $todo.dataset.id;
         const $input = $todo.querySelector(".todo_input");
         const content = $input.value;
-        const $label = $todo.querySelector("label")
+        const $label = $todo.querySelector("label");
         const $editInput = $todo.querySelector(".todo_input");
         const $contentButtons = $todo.querySelector(".content_buttons");
         const $editButtons = $todo.querySelector(".edit_buttons");
-        if (e.target.className === "todo_edit_confirm_button" || e.target.classList[2] === "confirm") {
-          if (content === $label.innerText) {
-            $label.style.display = "block";
-            $editInput.style.display = "none";
-            $contentButtons.style.display = "flex";
-            $editButtons.style.display = "none";
-            $editInput.value = $label.innerText;
-            return
-          }
+        if (
+            e.target.className === "todo_edit_confirm_button" ||
+            e.target.classList[2] === "confirm"
+        ) {
+            if (content === $label.innerText) {
+                $label.style.display = "block";
+                $editInput.style.display = "none";
+                $contentButtons.style.display = "flex";
+                $editButtons.style.display = "none";
+                $editInput.value = $label.innerText;
+                return;
+            }
             fetch(`${API_URL}/${id}`, {
                 method: "PATCH",
                 body: JSON.stringify({ content }),
@@ -156,7 +180,10 @@
     const removeTodo = (e) => {
         const $todo = e.target.closest(".todo");
         const id = $todo.dataset.id;
-        if (e.target.className === "todo_remove_button" || e.target.classList[2] === "remove") {
+        if (
+            e.target.className === "todo_remove_button" ||
+            e.target.classList[2] === "remove"
+        ) {
             fetch(`${API_URL}/${id}`, {
                 method: "DELETE",
             })
@@ -168,6 +195,7 @@
     const init = () => {
         window.addEventListener("DOMContentLoaded", () => {
             getTodos();
+            pagination();
         });
         $form.addEventListener("submit", addTodo);
         $todos.addEventListener("click", toggleTodo);

@@ -66,7 +66,6 @@ a:hover, a:focus {
 
 button {
   border: 0;
-  background-color: transparent;
   cursor: pointer;
 }
 
@@ -253,17 +252,31 @@ body {
 .pagination {
   position: absolute;
   left: 50%;
-  bottom: 25px;
+  bottom: 11px;
   transform: translateX(-50%);
-  display: flex;
+  max-width: 350px;
   background-color: #fff;
+  display: flex;
+  width: 100%;
 }
 
 .pagination button {
-  width: 50px;
+  flex: 1;
   height: 30px;
   color: #555;
   margin: 0 2px;
   font-weight: 700;
   border-radius: 6px;
+}
+
+.pagination button:first-child {
+  margin-left: 4px;
+}
+
+.pagination button:last-child {
+  margin-right: 4px;
+}
+
+.pagination button.active {
+  color: #9dc0e8;
 }

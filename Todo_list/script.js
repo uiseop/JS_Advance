@@ -9,12 +9,38 @@
     const $pagination = get(".pagination");
 
     const API_URL = "http://localhost:3000/todos";
-    let currentPage = 1;
+    let currentPage = 3;
+    let currentIndex = 1;
     const limit = 5;
     const pageCount = 5;
     let totalCount;
+    let totalPage;
 
-    const pagination = () => {};
+    const pagination = () => {
+        $pagination.innerHTML = "";
+        const startPage = (currentPage - 1) * limit + 1;
+        const lastPage =
+            startPage + pageCount > totalPage
+                ? totalPage
+                : startPage + pageCount;
+        let prev = null;
+        let next = null;
+        if (currentPage !== 1) {
+            prev = `<button class="prev" data-fn="prev">이전</button>`;
+        }
+        prev ? ($pagination.innerHTML += prev) : "";
+        for (let idx = startPage; idx < lastPage; idx++) {
+            const button =
+                idx === currentIndex
+                    ? `<button class="active">${idx}</button>`
+                    : `<button>${idx}</button>`;
+            $pagination.innerHTML += button;
+        }
+        if (currentPage < totalPage) {
+            next = `<button class"next" data-fn="next">다음</button>`;
+        }
+        next ? ($pagination.innerHTML += next) : "";
+    };
 
     const createTodoElement = (todo) => {
         const { id, content, completed } = todo;
@@ -60,10 +86,11 @@
     const getTodos = () => {
         fetch(`${API_URL}?_page=${currentPage}&_limit=${limit}`)
             .then((res) => {
-                console.log(res.headers.entries())
+                // console.log(res.headers.entries());
                 const response = [...res.headers];
-                totalCount = response[6][1]
-                console.log(totalCount)
+                totalCount = response[6][1];
+                totalPage = Math.ceil(totalCount / limit);
+                pagination();
                 return res.json();
             })
             .then((todos) => {
@@ -195,7 +222,6 @@
     const init = () => {
         window.addEventListener("DOMContentLoaded", () => {
             getTodos();
-            pagination();
         });
         $form.addEventListener("submit", addTodo);
         $todos.addEventListener("click", toggleTodo);

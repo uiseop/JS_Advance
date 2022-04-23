@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To do List</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="../assets/css/styles.css">
-</head>
-<body>
-    <div class="wrap">
-        <header class="header">
-            <h1 class="title">TO DO LIST</h1>
-            <form class="todo_form">
-                <input type="text" class="todo_input" placeholder="할 일을 입력해 주세요." autofocus="true">
-                <button type="submit" class="todo_submit_button"><i class="fas fa-plus"></i></button>
-            </form>
-        </header>
-        <ul class="todos">
-        </ul>
-    </div>
-    <script src="../script.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>To do List</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+        />
+        <link rel="stylesheet" href="../assets/css/styles.css" />
+    </head>
+    <body>
+        <div class="wrap">
+            <header class="header">
+                <h1 class="title">TO DO LIST</h1>
+                <form class="todo_form">
+                    <input
+                        type="text"
+                        class="todo_input"
+                        placeholder="할 일을 입력해 주세요."
+                        autofocus="true"
+                    />
+                    <button type="submit" class="todo_submit_button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </form>
+            </header>
+            <ul class="todos"></ul>
+            <ul class="pagination"></ul>
+        </div>
+        <script src="../script.js"></script>
+    </body>
 </html>

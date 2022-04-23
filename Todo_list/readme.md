@@ -1,5 +1,12 @@
 # Todo List
 
+## 목차
+<ul>
+<li><a href="#json">Json-server</a></li>
+<li><a href="#fetch">fetch API</a></li>
+<li><a href="#problems">문제/이슈 기록</a></li>
+</ul>
+
 > `json-server`의 편리함을 확인하고, 간단한 CRUD 프로젝트를 제작해본다.
 
 반응형 디자인을 오랜만에 만들어보면서 다시한번 공부하는 시간이 되었다.
@@ -27,7 +34,7 @@ box-shadow: 3px 3px red, -1em 0 0.4em olive;
 ```
 
 
-## Json-server
+## <p id="json">Json-server</id>
 - 실제 배포시에는 사용되지 않고, 프로토타이핑이나 목업 데이터들을 사용한 `fake api` 작성시에 유용하게 사용된다고 한다.
 
 - 혼자하는 프로젝트이기때문에 굳이 Backend까지 혼자 하기엔 프론트엔드를 학습하는데에 효율적이지 못하다는 판단으로 앞으론 요곳을 요긴하게 사용해보도록 한다.
@@ -63,7 +70,7 @@ json-server --watch db.json // json-server를 실행
 
 - json-server를 사용하면 `filter`나 `pagination`같은 기능도 사용할 수 있다고 해. 직접 만들때는 살짞 빡🤯이 쳤던것같았는데 손쉽게 만들 수 있겠다👏👏
 
-## fetch API 정리
+## <p id="fetch">fetch API 정리</p>
 https://developer.mozilla.org/ko/docs/Web/API/Fetch_API
 
 - AJAX 요청을 하기 위한 기술
@@ -107,7 +114,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 ```
 
-## 문제 기록
+## <p id="problems">문제 기록</p>
 - ### DOM접근 문제
   - 개별 checkbox의 class명인 `.todo_checkbox`에 접근하지 못함
   - `이유`: DOM이 Loaded된 시점에서 비로서 서버와 통신하여 데이터들을 받아오고, `getTodos`함수를 통해 요소들을 만들기 때문에 곧바로 `.todo_checkbox`에 접근하지 못함
@@ -132,3 +139,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 - ### 버튼 클릭 이벤트 범위 수정
   - 이벤트 버블링의 타겟을 `className === ...`으로 설정하다보니 className 자식요소인 icon을 감지하지 못하는 문제 ➡️ console을 찍어보니 icon클릭에 이벤트를 넣어주지 않음 ➡️ classList[0]으로 접근해서 icon일 경우에도 동일한 이벤트 처리효과를 넣어줌
+
+- ### Pagination
+  Json-server에서는 `Pagination`기능을 제공한다. fetch를 통해 데이터를 받아올 때, 한번에 모든 데이터를 받아오게 되면 그만큼 네트워크 부하가 커지고, 이로인한 사용자경험(UX)이 떨어지는 문제가 발생, 즉 양 측에서 문제가 발생.
+
+  ➡️ 일정한 양의 데이터만을 요청하여 부하를 낮춤
+  - _page로 접근하면 default로 10개의 데이터를 보여준다고 함.
+    `http://localhost:3000/todos?_page=10&_limit=5`로 접근하면 46~50까지의 데이터를 보여주게됨.
+  - response의 header안 `Link`프로퍼티를 확인하면 마지막 페이지 번호를 확인할 수 있고, 이를 사용하여 끝을 확인할 수 있다고 함. 

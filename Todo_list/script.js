@@ -6,6 +6,7 @@
     const $todos = get(".todos");
     const $form = get(".todo_form");
     const $todoInput = get(".todo_input");
+    const $pagination = get(".pagination")
 
     const API_URL = "http://localhost:3000/todos";
 

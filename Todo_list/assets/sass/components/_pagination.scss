@@ -1,0 +1,17 @@
+.pagination {
+    position: absolute;
+    left: 50%;
+    bottom: 25px;
+    transform: translateX(-50%);
+    display: flex;
+    background-color: #fff;
+
+    button {
+        width: 50px;
+        height: 30px;
+        color: #555;
+        margin: 0 2px;
+        font-weight: 700;
+        border-radius: 6px;
+    }
+}

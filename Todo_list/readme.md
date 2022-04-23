@@ -108,7 +108,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 ```
 
 ## 문제 기록
-- DOM접근 문제
+- ### DOM접근 문제
   - 개별 checkbox의 class명인 `.todo_checkbox`에 접근하지 못함
   - `이유`: DOM이 Loaded된 시점에서 비로서 서버와 통신하여 데이터들을 받아오고, `getTodos`함수를 통해 요소들을 만들기 때문에 곧바로 `.todo_checkbox`에 접근하지 못함
   - 해결: JS의 `이벤트 버블링🐳`을 사용하여 해결하자. 부모 요소 `.todos`에서 이벤트를 처리한다. 
@@ -122,13 +122,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
   ```
 
-- 텍스트 수정시 Focus처리
+- ### 텍스트 수정시 Focus처리
   - 텍스트 수정 버튼 눌렀을 때 focus() 메서드를 주어도 커서가 맨 앞에 위치함.
   - 구글링 결과 Input의 value를 비워주고, 다시 채우면 커서가 뒤로 밀려난다고 하는군!  
 
-- 텍스트 수정 취소시 Input데이터
+- ### 텍스트 수정 취소시 Input데이터
   - 수정 취소해도 Input이 이전에 변경하던 내용을 담고있음
   - label의 innerText는 이전의 데이터를 갖고있기때문에 이를 참조함.
 
-- 버튼 클릭 이벤트 범위 수정
+- ### 버튼 클릭 이벤트 범위 수정
   - 이벤트 버블링의 타겟을 `className === ...`으로 설정하다보니 className 자식요소인 icon을 감지하지 못하는 문제 ➡️ console을 찍어보니 icon클릭에 이벤트를 넣어주지 않음 ➡️ classList[0]으로 접근해서 icon일 경우에도 동일한 이벤트 처리효과를 넣어줌

@@ -73,7 +73,7 @@ const scrollTop = document.documentElement.scrollTop;
 const width = (scrollTop / height) * 100;
 ```
 
-### <a href="throttle">throttle & debounce</a>
+### throttle & debounce
 
 scroll이벤트가 발생할때마다 값을 계산하고, console로 찍어보니 너무 자주 함수가 호출되어 console창이 가득 차 버리는 현상이 발생한다. ➡️ 전에 이론상으로만 알아봤었던 최적화 기법 중 하나인 `throttle`과 `debounce` 기법을 사용해본다 
 

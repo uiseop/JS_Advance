@@ -5,6 +5,7 @@ a# Progress Bar
 <ul>
 <li><a href="#browser">브라우저 창의 너비와 높이</a></li>
 <li><a href="#scroll">요소 사이즈와 스크롤</a></li>
+<li><a href="#throttle">throttle & debounce</a></li>
 </ul>
 
 > 블로그들을 보면 해당 페이지 내에 현재 내가 보고있는 부분이 페이지의 어디쯤인지 알려주는 바가 있어 한번 구현해본다.
@@ -71,3 +72,32 @@ const height = // scroll최대 길이 - client창의 높이
 const scrollTop = document.documentElement.scrollTop;
 const width = (scrollTop / height) * 100;
 ```
+
+### <a href="throttle">throttle & debounce</a>
+
+scroll이벤트가 발생할때마다 값을 계산하고, console로 찍어보니 너무 자주 함수가 호출되어 console창이 가득 차 버리는 현상이 발생한다. ➡️ 전에 이론상으로만 알아봤었던 최적화 기법 중 하나인 `throttle`과 `debounce` 기법을 사용해본다 
+
+https://velog.io/@uiseop/JS-%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81%EA%B3%BC-%EB%94%94%EB%B0%94%EC%9A%B4%EC%8A%A4
+
+- 시간이 지남에 따라 함수가 실행되도록 허용하는 횟수를 제어하는 방법
+
+#### debounce
+
+- debounce: 특정 시간이 지난 후 하나의 이벤트만 발생시키는 방법
+- 예시) 버튼 중복 클릭 방지
+
+![debounce](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F4rclV%2Fbtq0ApFD65V%2F34Jw0Gdel1hvvHohbxG2tk%2Fimg.png)
+
+#### throttle
+
+- throttle: 일정한 주기마다 이벤트를 발생시키는 방법
+- 예시) 스크롤 이벤트
+
+![throttle](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbkUExC%2Fbtq0zZf9s1c%2FQ559Kyka5nQc0dZL8OL1W1%2Fimg.png)
+
+##### Before
+적용 전... 
+![before](./images/before.png)
+##### After
+적용 후...
+![after](./images/after.png)

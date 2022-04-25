@@ -3,16 +3,18 @@
         return document.querySelector(target);
     };
 
-    const $content = get(".content")
+    const $progressBar = get(".progress_bar");
 
     const onscroll = () => {
-        console.log("offsetTop: ", $content.offsetTop)
-        console.log("scrollTop: ", $content.scrollTop)
-        console.log("scrollHeight: ", $content.scrollHeight)
-        console.log(document.documentElement.scrollHeight, document.documentElement.clientHeight)
-        
-    }
+        const height =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const width = (scrollTop/height) * 100
+        // console.log(width)
 
-    window.addEventListener("scroll", () => onscroll())
+        $progressBar.style.width = width + "%";
+    };
 
+    window.addEventListener("scroll", () => onscroll());
 })();

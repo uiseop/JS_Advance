@@ -5,7 +5,7 @@ a# Progress Bar
 <ul>
 <li><a href="#browser">브라우저 창의 너비와 높이</a></li>
 <li><a href="#scroll">요소 사이즈와 스크롤</a></li>
-<li><a href="#throttle">throttle & debounce</a></li>
+<li><a href="#problems">문제 기록</a></li>
 </ul>
 
 > 블로그들을 보면 해당 페이지 내에 현재 내가 보고있는 부분이 페이지의 어디쯤인지 알려주는 바가 있어 한번 구현해본다.

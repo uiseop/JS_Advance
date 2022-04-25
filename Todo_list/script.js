@@ -3,14 +3,17 @@
         return document.querySelector(target);
     };
 
+    const getAll = (target) => {
+        return document.querySelectorAll(target);
+    };
+
     const $todos = get(".todos");
     const $form = get(".todo_form");
     const $todoInput = get(".todo_input");
     const $pagination = get(".pagination");
 
     const API_URL = "http://localhost:3000/todos";
-    let currentPage = 3;
-    let currentIndex = 1;
+    let currentPage = 1;
     const limit = 5;
     const pageCount = 5;
     let totalCount;
@@ -18,20 +21,23 @@
 
     const pagination = () => {
         $pagination.innerHTML = "";
-        const startPage = (currentPage - 1) * limit + 1;
-        const lastPage =
-            startPage + pageCount > totalPage
-                ? totalPage
-                : startPage + pageCount;
+        const pageGroup = Math.ceil(currentPage / pageCount);
         let prev = null;
         let next = null;
+        let lastNumber = pageGroup * pageCount;
+        if (lastNumber > totalPage) {
+            lastNumber = totalPage;
+        }
+        let firstNumber = (pageGroup - 1) * pageCount + 1;
         if (currentPage !== 1) {
             prev = `<button class="prev" data-fn="prev">이전</button>`;
         }
-        prev ? ($pagination.innerHTML += prev) : "";
-        for (let idx = startPage; idx < lastPage; idx++) {
+        // console.log("firstNumber: ", firstNumber, "lastNumber: ", lastNumber);
+        currentPage > pageCount ? ($pagination.innerHTML += prev) : "";
+        for (let idx = firstNumber; idx < lastNumber + 1; idx++) {
+            // console.log(idx, currentPage, "why?!?!");
             const button =
-                idx === currentIndex
+                idx === currentPage
                     ? `<button class="active">${idx}</button>`
                     : `<button>${idx}</button>`;
             $pagination.innerHTML += button;
@@ -40,6 +46,21 @@
             next = `<button class"next" data-fn="next">다음</button>`;
         }
         next ? ($pagination.innerHTML += next) : "";
+        const $currentPageButtons = getAll(`.pagination button`);
+        // console.log($currentPageButtons)
+        $currentPageButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                if (button.dataset.fn === "prev") {
+                    currentPage = (pageGroup - 2) * 5 + 1;
+                } else if (button.dataset.fn === "next") {
+                    currentPage = pageGroup * 5 + 1;
+                } else {
+                    currentPage = Number(button.innerText);
+                }
+                // console.log("currentPage: ", currentPage, pageGroup);
+                getTodos();
+            });
+        });
     };
 
     const createTodoElement = (todo) => {
@@ -94,7 +115,7 @@
                 return res.json();
             })
             .then((todos) => {
-                console.log(todos);
+                // console.log(todos);
                 return renderAllTodos(todos);
             })
             .catch((err) => console.error(err));

@@ -181,3 +181,44 @@ content-type: text/html; charset=utf-8
 expires: Sun, 07 Jul 2019 03:54:43 GMT
 last-modified: Sun, 07 Jul 2019 03:43:47 GMT
 ```
+
+-   #### 필요한것 들
+
+    -   currentPage: 현재 페이지 번호
+    -   limit: 한번에 보여줄 아이템의 개수들
+    -   pageCount: 페이지 번호들 개수
+    -   totalCount: 총 개수 ( json-server의 응답 헤더안에 내려져와 )
+    -   totalPage: totalCount를 기준으로 총 몇개의 페이지가 있는지
+    -   firstNumber/lastNumber: 버튼들의 범위
+
+-   구현
+
+    ```javascript
+    // getTodos()에서... (비동기적으로 응답을 저장하기 위해서)
+    const response = [...res.headers];
+    totalCount = response[6][1];
+    totalPage = Math.ceil(totalCount / limit);
+
+    // pagination()에서...
+    const pageGroup = Math.ceil(currentPage / pageCount);
+    let lastNumber = pageGroup * pageCount;
+    if (lastNumber > totalPage) {
+        lastNumber = totalPage;
+    }
+    let firstNumber = (pageGroup - 1) * pageCount + 1;
+    const $currentPageButtons = getAll(`.pagination button`);
+    // console.log($currentPageButtons)
+    $currentPageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            if (button.dataset.fn === "prev") {
+                currentPage = (pageGroup - 2) * 5 + 1;
+            } else if (button.dataset.fn === "next") {
+                currentPage = pageGroup * 5 + 1;
+            } else {
+                currentPage = Number(button.innerText);
+            }
+            // console.log("currentPage: ", currentPage, pageGroup);
+            getTodos();
+        });
+    });
+    ```

@@ -24,15 +24,15 @@
 
     const loadPost = async () => {
         const posts = await getPost();
-        console.log(posts)
+        console.log(posts);
         for (let post of posts) {
             let html = `<li class="item">
-                <div className="header">
-                <span className="index">${post.id}.</span>
-                <h2 className="item_title">${post.title}</h2>
+                <div class="header">
+                <span class="index">${post.id}.</span>
+                <h2 class="item_title">${post.title}</h2>
                 </div>
-                <p className="desc">${post.body}</p>
-            </li>`
+                <p class="desc">${post.body}</p>
+            </li>`;
             $items.innerHTML += html;
         }
     };

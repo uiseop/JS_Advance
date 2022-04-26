@@ -120,7 +120,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 ## <p id="problems">문제 기록</p>
 
--   ### DOM접근 문제
+-   ### ⛔ DOM접근 문제
 
     -   개별 checkbox의 class명인 `.todo_checkbox`에 접근하지 못함
     -   `이유`: DOM이 Loaded된 시점에서 비로서 서버와 통신하여 데이터들을 받아오고, `getTodos`함수를 통해 요소들을 만들기 때문에 곧바로 `.todo_checkbox`에 접근하지 못함
@@ -136,21 +136,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
     };
     ```
 
--   ### 텍스트 수정시 Focus처리
+-   ### ⛔ 텍스트 수정시 Focus처리
 
     -   텍스트 수정 버튼 눌렀을 때 focus() 메서드를 주어도 커서가 맨 앞에 위치함.
     -   구글링 결과 Input의 value를 비워주고, 다시 채우면 커서가 뒤로 밀려난다고 하는군!
 
--   ### 텍스트 수정 취소시 Input데이터
+-   ### ⛔ 텍스트 수정 취소시 Input데이터
 
     -   수정 취소해도 Input이 이전에 변경하던 내용을 담고있음
     -   label의 innerText는 이전의 데이터를 갖고있기때문에 이를 참조함.
 
--   ### 버튼 클릭 이벤트 범위 수정
+-   ### ⛔ 버튼 클릭 이벤트 범위 수정
 
     -   이벤트 버블링의 타겟을 `className === ...`으로 설정하다보니 className 자식요소인 icon을 감지하지 못하는 문제 ➡️ console을 찍어보니 icon클릭에 이벤트를 넣어주지 않음 ➡️ classList[0]으로 접근해서 icon일 경우에도 동일한 이벤트 처리효과를 넣어줌
 
--   ### Pagination
+-   ### ⛔ Pagination
     Json-server에서는 `Pagination`기능을 제공한다. fetch를 통해 데이터를 받아올 때, 한번에 모든 데이터를 받아오게 되면 그만큼 네트워크 부하가 커지고, 이로인한 사용자경험(UX)이 떨어지는 문제가 발생, 즉 양 측에서 문제가 발생.
 
 ➡️ 일정한 양의 데이터만을 요청하여 부하를 낮춤
@@ -162,7 +162,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 -   response의 header안 `Link`프로퍼티를 확인하면 마지막 페이지 번호를 확인할 수 있고, 이를 사용하여 끝을 확인할 수 있다고 함.
 -   response의 `X-Total-Count`에 접근하면 total Count값 확인 가능.
 
-    -   #### response의 Header로의 접근
+    -   #### ⛔ response의 Header로의 접근
         `res.headers`로 헤더에 액세스하면 빈 객체가 기록되는 문제가 발생.
         헤더는 객체를 반환하지 않고 iterator를 반환한다고 한다.
         헤더가 `객체가 아니기때문에` iterator를 사용해서 직접 헤어데 액세스해야한다고 합니다. iterator는 loop를 통해 key/value형식으로 헤더에 액세스 할 수 있고, 아니면 구조분해 할당으로 iterator를 객체로 복사하여서 사용할 수 있겠다.
@@ -182,7 +182,7 @@ expires: Sun, 07 Jul 2019 03:54:43 GMT
 last-modified: Sun, 07 Jul 2019 03:43:47 GMT
 ```
 
--   #### 필요한것 들
+-   #### ⛔ 필요한것 들
 
     -   currentPage: 현재 페이지 번호
     -   limit: 한번에 보여줄 아이템의 개수들

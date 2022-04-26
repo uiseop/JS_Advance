@@ -4,6 +4,7 @@
     };
 
     const $items = get(".items");
+    const $loader = get(".loader");
     const API_URL = "https://jsonplaceholder.typicode.com/posts";
     const limit = 10;
     let page = 1;
@@ -31,49 +32,59 @@
     };
 
     const loadPost = async () => {
-        const posts = await getPost();
-        // console.log(posts);
-        for (let post of posts) {
-            let html = `<li class="item">
+        try {
+            $loader.classList.add("show")
+            const posts = await getPost();
+            // console.log(posts);
+            for (let post of posts) {
+                let html = `<li class="item">
                 <div class="header">
                 <span class="index">${post.id}.</span>
                 <h2 class="item_title">${post.title}</h2>
                 </div>
                 <p class="desc">${post.body}</p>
             </li>`;
-            $items.innerHTML += html;
+                $items.innerHTML += html;
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            $loader.classList.remove("show")
+            timerId = null;
         }
     };
 
     const isEndScroll = () => {
-        const {scrollTop, scrollHeight, clientHeight} = document.documentElement
+        const { scrollTop, scrollHeight, clientHeight } =
+            document.documentElement;
         if (limit * page >= end) {
-            console.log("It's Finish!!")
-            window.removeEventListener("scroll", onScroll)
-            return
+            console.log("It's Finish!!");
+            window.removeEventListener("scroll", onScroll);
+            return;
         }
-        if(scrollTop + clientHeight >= scrollHeight) {
-            console.log("wow you in last")
+        if (scrollTop + clientHeight >= scrollHeight) {
+            console.log("wow you in last");
             page += 1;
             loadPost();
+            return;
         }
-    }
+        timerId = null;
+    };
 
     const throttle = (callback, time) => {
         if (!timerId) {
             timerId = setTimeout(() => {
-                timerId = null;
-                callback()
+                callback();
             }, time);
         }
-    }
+    };
 
     const onScroll = () => {
-        throttle(isEndScroll, 100)
-    }
+        throttle(isEndScroll, 100);
+    };
 
     window.addEventListener("DOMContentLoaded", () => {
         loadPost();
-        window.addEventListener("scroll", onScroll)
+        window.addEventListener("scroll", onScroll);
     });
 })();

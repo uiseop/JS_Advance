@@ -33,7 +33,7 @@
 
     const loadPost = async () => {
         try {
-            $loader.classList.add("show")
+            $loader.classList.add("show");
             const posts = await getPost();
             // console.log(posts);
             for (let post of posts) {
@@ -49,7 +49,7 @@
         } catch (err) {
             console.error(err);
         } finally {
-            $loader.classList.remove("show")
+            $loader.classList.remove("show");
             timerId = null;
         }
     };
@@ -62,7 +62,7 @@
             window.removeEventListener("scroll", onScroll);
             return;
         }
-        if (scrollTop + clientHeight >= scrollHeight) {
+        if (scrollTop + clientHeight >= scrollHeight - 5) {
             console.log("wow you in last");
             page += 1;
             loadPost();

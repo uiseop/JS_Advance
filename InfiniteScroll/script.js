@@ -49,6 +49,7 @@
         const {scrollTop, scrollHeight, clientHeight} = document.documentElement
         if (limit * page >= end) {
             console.log("It's Finish!!")
+            window.removeEventListener("scroll", onScroll)
             return
         }
         if(scrollTop + clientHeight >= scrollHeight) {
@@ -67,8 +68,12 @@
         }
     }
 
+    const onScroll = () => {
+        throttle(isEndScroll, 100)
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
         loadPost();
-        window.addEventListener("scroll", () => throttle(isEndScroll, 100))
+        window.addEventListener("scroll", onScroll)
     });
 })();

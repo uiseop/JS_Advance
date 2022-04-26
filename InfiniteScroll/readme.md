@@ -1,6 +1,7 @@
 # infinite scroll
 
 > 이번에는 `Debounce`의 가장 유명한 예시인 무한 스크롤을 구현해보자.
+
 -   무한스크롤 구현
 -   컨텐츠의 끝이 화면 끝에 닿으면 api가 호출되게 구현
 -   todolist 와 달리 외부 api 연동
@@ -12,7 +13,6 @@
 
 -   <a href="#api">API 연동</a>
 -   <a href="#problem">문제 기록</a>
-
 
 ## <a id="api">API 연동</a>
 
@@ -42,15 +42,44 @@ const loadPost = async () => {
     }
 };
 ```
+
 해당 코드를 적용해서 `$items`에 불러온 post들을 작성한 css의 class에 맞게 작성해서 `$items.innerHTML`에 넣어주었는데 CSS가 적용되지 않는 문제가 발생..
 
 ➡️ ...VScode에서 제공해주는 자동완성 기능을 너무 믿었던 나머지 실수를 범함... `className`이 아니라 `class`라고 작성해야하는것을..ㅎ..ㅎ.. 아 .. ㅎㅎ😂😂
 
 ### 무한 스크롤도 throttle이 필요하다!!
+
 무한 스크롤에서 스크롤의 위치를 감지하는데, 이 때문에 결국 무한 스크롤에서도 스크롤의 위치를 감지하기 위해 스크롤이 발생할때마다 함수를 실행시키는구만 ? 바로 해결해보자🤗
 
 ### 무한 스크롤 개수 제한 - 끝나도 계속 요청하네?
+
 ![개수 제한](./images/response.png)
-jsonplaceholder에서 제공하는 데이터는 총 100개지만, _page가 10이 넘어가도 페이지 하단에 도착하면 계속해서 요청을 보냄.
+jsonplaceholder에서 제공하는 데이터는 총 100개지만, \_page가 10이 넘어가도 페이지 하단에 도착하면 계속해서 요청을 보냄.
 
 이것도 마찬가지로 `X-Total-Count`에 접근해서 설정해주자.
+
+### removeEventListener
+
+https://developer.mozilla.org/ko/docs/Web/API/EventTarget/removeEventListener
+
+-   scroll이벤트가 이제 더이상 필요없어졌지만, 계속해서 이벤트를 감지하고 있음
+-   addEventListener()로 등록했던 이벤트 리스너를 제거
+-   ✔️ 더이상 필요가 없는데 이벤트가 계속 발생하는 경우 메모리 누수가 일어날 수 있음
+-   따라서 명시적으로 해제
+
+```javascript
+const throttle = (callback, time) => {
+    if (!timerId) {
+        timerId = setTimeout(() => {
+            timerId = null;
+            callback();
+        }, time);
+    }
+};
+
+const onScroll = () => {
+    throttle(isEndScroll, 100);
+};
+```
+
+throttle함수를 리턴하는 고차함수를 새로이 만들어서 removeEventListener에서 명시적으로 해제하지 못했던 화살표함수를 해제할 수 있도록 만듦.

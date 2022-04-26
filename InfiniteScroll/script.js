@@ -8,12 +8,19 @@
     const limit = 10;
     let page = 1;
     let timerId;
+    let end;
 
     const getPost = async () => {
         try {
             const response = await fetch(
                 `${API_URL}?_limit=${limit}&_page=${page}`
             );
+
+            for (let pair of response.headers.entries()) {
+                if (pair[0] === "x-total-count") {
+                    end = pair[1];
+                }
+            }
             // if (!response.ok) {
             //     throw new Error("에러가 발생했습니다.")
             // }
@@ -40,7 +47,10 @@
 
     const isEndScroll = () => {
         const {scrollTop, scrollHeight, clientHeight} = document.documentElement
-        console.log(scrollTop, scrollHeight, clientHeight)
+        if (limit * page >= end) {
+            console.log("It's Finish!!")
+            return
+        }
         if(scrollTop + clientHeight >= scrollHeight) {
             console.log("wow you in last")
             page += 1;

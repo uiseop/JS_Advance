@@ -21,3 +21,25 @@ https://jsonplaceholder.typicode.com/
 -   [json-server](https://www.npmjs.com/package/json-server) 만든 곳에서 만들었기 때문에 사용 방법은 json-server와 동일
 
 ## <a id="problem">문제 기록</a>
+
+### Script에서 한번에 Element추가하기 - CSS안먹힘
+
+```javascript
+const loadPost = async () => {
+    const posts = await getPost();
+    console.log(posts);
+    for (let post of posts) {
+        let html = `<li class="item">
+                <div className="header">
+                <span className="index">${post.id}.</span>
+                <h2 className="item_title">${post.title}</h2>
+                </div>
+                <p className="desc">${post.body}</p>
+            </li>`;
+        $items.innerHTML += html;
+    }
+};
+```
+해당 코드를 적용해서 `$items`에 불러온 post들을 작성한 css의 class에 맞게 작성해서 `$items.innerHTML`에 넣어주었는데 CSS가 적용되지 않는 문제가 발생..
+
+➡️ ...VScode에서 제공해주는 자동완성 기능을 너무 믿었던 나머지 실수를 범함... `className`이 아니라 `class`라고 작성해야하는것을..ㅎ..ㅎ.. 아 .. ㅎㅎ😂😂

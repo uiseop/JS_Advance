@@ -3,6 +3,7 @@
 - <a href="#todo">Todo List</a>
 - <a href="#progress">Progress bar</a>
 - <a href="#infinite">Infinite Scroll</a>
+- <a href="#carousel">Image Carousel</a>
 
 # <a id="todo" href="https://github.com/uiseop/JS_Advance/tree/main/Todo_list">Todo List</a>
 - 투두리스트 구현
@@ -36,3 +37,10 @@
 - Error처리에 유의하면서 작업을 진행한다.
 - 쓰로틀링을 다시 한번 적용해본다.
 - Loader를 표시해보자. (withdout Library.🤗)
+
+# <a id="carousel">Image Carousel</a>
+- 홈페이지 상단의 광고 패널에서의 이미지들이 슬라이드쇼(?), 로테이트 되는것을 본적이 있었고, 이를 직접 구현해본다.
+- 이를 부르는 명칭이 Image Carousel이라고 하기때문에 프로젝트 이름또한 Carousel이라고 명명한다.
+
+## 사용 기술 스택
+- 저번에 살짝 구현 해 보았을 때, 딱히 다른 기술은 사용하지 않았고, `Opacity: 0`을 주면서 보였다 안보였다 했던것 같은데 한번 직접 만들어보면서 확인해보자!

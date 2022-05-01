@@ -8,24 +8,6 @@
     padding: 17px 0;
 }
 
-.carousel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cell {
-    display: flex;
-    font-size: 34px;
-    font-weight: bold;
-    border: 1px solid #fbc531;
-    border-radius: 8px;
-    width: 100px;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
-}
-
 .button_container {
     display: flex;
     margin-top: 17px;

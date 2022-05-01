@@ -8,6 +8,37 @@
     padding: 17px 0;
 }
 
+.carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.item {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
+}
+
+.item.active {
+    opacity: 1;
+    position: relative;
+    z-index: 900;
+}
+
+.item.prev, .item.next {
+    z-index: 800;
+}
+
+.item.prev {
+    transform: translateX(-100%);
+}
+
+.item.next {
+    transform: translateX(100%);
+}
+
 .button_container {
     display: flex;
     margin-top: 17px;

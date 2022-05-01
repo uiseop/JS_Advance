@@ -1,5 +1,5 @@
 .wrap {
-    height: 100vh;
+    position: relative;
 }
 
 .title {
@@ -37,6 +37,30 @@
 
 .item.next {
     transform: translateX(100%);
+}
+
+.dots {
+    position: absolute;
+    display: flex;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.276);
+}
+
+.dot.active {
+    background-color: #fff;
+}
+
+.dot:not(:first-child) {
+    margin-left: 15px;
 }
 
 .button_container {

@@ -90,7 +90,7 @@ https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch
     -   axios는 이 과정을 자동으로 해주기 떄문에 바로 response를 받을 수 있다.
 -   body 데이터 타입은 헤더의 content-type 헤더와 일치해야 한다.
 
-```
+```javascript
 var url = 'https://example.com/profile';
 var data = {username: 'example'};
 
@@ -112,7 +112,7 @@ https://developer.mozilla.org/ko/docs/Web/API/Window/DOMContentLoaded_event
 
 -   초기 HTML 문서를 완전히 불러오고 분석했을 때 발생
 
-```
+```javascript
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed'); // 여기서는 console이 찍히겠군.
 });
@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         헤더는 객체를 반환하지 않고 iterator를 반환한다고 한다.
         헤더가 `객체가 아니기때문에` iterator를 사용해서 직접 헤어데 액세스해야한다고 합니다. iterator는 loop를 통해 key/value형식으로 헤더에 액세스 할 수 있고, 아니면 구조분해 할당으로 iterator를 객체로 복사하여서 사용할 수 있겠다.
 
-```
+```javascript
 // code
 fetch('https://stevemiller.dev')
   .then((response) => {

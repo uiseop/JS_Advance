@@ -9,6 +9,10 @@
         const items = carousel.querySelectorAll(".item");
         const totalItems = items.length;
 
+        carousel.addEventListener("click", (e) => {
+            console.log(e.target.className)
+        })
+
         for (let dot=0; dot < totalItems; dot++) {
             const dotElement = document.createElement("div")
             dotElement.className = "dot";

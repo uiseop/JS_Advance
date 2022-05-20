@@ -61,3 +61,62 @@ const config = {
     entry: "./src/js/index.js",
 }
 ```
+
+#### 3-2) Output 설정
+
+output은 웹팩이 번들을 꾸리고 나서 `결과물`을 어디로 내보낼지 지정하는 속성이다. 기본값으로 메인 결과물인 main.js 파일은 `./dist/main.js`에, 그 외 파일은 `./dist`폴더에 내보내진다. 파일 이름(file name), 경로(path),를 별도로 지정할 수 있고, clean을 true로 설정하면 지정한 결과물이 내보내지는 디렉토리안에 사용하지 않는 파일을 알아서 정리해준다. 이 외에도 수많은 커스텀 옵션을 설정할 수 있다고 한다.
+
+```javascript
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const config = {
+  output: {
+    filename: 'main.js',
+    path: path.resolve(dirname, 'dist'),
+    clean: true
+  },
+};
+```
+
+#### 3-3) Loader 설정하기 
+
+이제까지 자바스크립트 외의 리소스도 번들링할 수 있다고 했지만, 사실 웹팩은 기본적으로 JavaScript와 JSON 파일만 이해할 수 있다. 이 때 필요한 것이 Loader이다. 사용하려는 포맷에 대응하는 Loader를 설정해주면 다른 포맷의 리소스도 디펜던시 그래프에 추가할 수있게 된다. 
+
+Loader를 설정하려면 'test'와 'use' 두 가지 필수 속성을 적어주어야 한다. 'test'는 어떤 파일을 변환할지 지정하는 속성으로, 보통 /\.txt$/과 같이 정규표현식으로 작성한다. 이 때, /\.txt$/ 과 같이 따옴표 없이 작성해야한다. '/\.txt$/' 또는 "/\.txt$/"와 같이 따옴표를 넣으면 빌드가 제대로 안될 것이다,,, 'use'는 파일을 변환할 때 어떤 로더를 사용해야하는지 명시하는 속성이다.이는 웹팩 컴파일러에게 다음과 같이 말하는 것과 같다.
+
+> 웹팩 컴파일러야!
+> 디펜던시 그래프를 그리다가 'test'에 지정된 파일형식을 발견하잖아?
+> 그러면 번들에 넣기 전에 내가 'use'에 지정한 로더로 꼭 변환해줘야해~!
+
+이렇게 Loader를 설정해주면 포맷에 얽매이지 않은 자유로운 import가 가능하다. 예를 들어 js파일에서 `import '../css/index.css';`과 같이 해당 모듈에서 필요한 css파일을 import해올 수 있다. 웹팩을 사용하기 전에는 상상할 수 없었던 일이다! 이 기능은 다른 번들러에서는 지원되지 않을 수도 있다고 한다. 
+
+주의할 점은 config에 바로 rules 속성을 쓰는게 아니라 반드시 module.rules에 정의해 주어야 한다는 것이다. (틀리면 웹팩이 알아서 경고해주기는 한다.)
+
+#### 3-4) Plugin 설정하기
+
+바닐라 자바스크립트 프로젝트에서 꼭 필요한 두 가지 Plugin만 설정해보자. (주요 플러그인 리스트는 <a href="https://webpack.js.org/plugins/">여기</a>서 확인할 수 있다.)
+
+<a href="https://webpack.js.org/plugins/html-webpack-plugin/">html-webpack-plugin</a>을 사용하면 dist의 main.js를 스크립트 파일로 포함하는 HTML 문서를 dist 디렉토리 내에 자동으로 생성해준다. template에 원본으로 사용할 HTML문서 경로를 넣어주면 된다. 이 플러그인을 사용하지 않고 빌드하면 dist 디렉토리에 .html 파일이 생성되지 않고, 따라서 dist 디렉토리 내의 빌드 결과물 만으로는 렌더할 수 없다.  
+
+<a href="https://webpack.js.org/plugins/mini-css-extract-plugin/">mini-css-extract-plugin</a>를 사용하면 빌드 결과 JS파일에서 스타일시트를 분리해서 CSS 파일을 따로 만들어준다. 크기가 큰 하나의 파일을 받는 것보다 작은 여러 개의 파일을 다운로드 하는 것이 성능상 유리하기 때문에, 배포 시에는 분리하는 것이 좋다. 
+
+```bash
+# 터미널 명령어
+npm i -D html-webpack-plugin mini-css-extract-plugin
+```
+
+```javascript
+// webpack.config.js
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+const config = {
+  plugins: [
+    new HtmlWebpackPlugin({ template: './src/index.html' }), 
+    new MiniCssExtractPlugin()
+  ],
+};
+```

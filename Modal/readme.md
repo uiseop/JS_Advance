@@ -120,3 +120,232 @@ const config = {
   ],
 };
 ```
+
+### Webpack.config.js 설정
+
+#### 바벨 
+
+바벨은 ES6+ 문법으로 작성된 js파일을 ES5 문법으로 트랜스파일링 해준다.  
+
+```bash
+# 터미널 명령어
+npm i -D babel-loader @babel/core @babel/preset-env
+npm i core-js regenerator-runtime
+```
+
+```javascript
+// webpack.config.js
+const config = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|pages)/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
+};
+```
+
+#### CSS 
+
+```bash
+# 터미널 명령어
+npm i -D css-loader
+```
+
+```javascript
+// webpack.config.js
+const config = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          {
+            loader: 'css-loader',
+            options: { import: true },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
+#### 이미지 설정
+
+```javascript
+const config = {
+  module: {
+    rules: [
+      {
+        test: /\.png$/,
+        type: 'asset/resource',
+      },
+    ],
+  },
+};
+```
+
+### 웹팩 dev-server 설정
+
+코드를 수정했을 때 다시 빌드하고 새로고침 하지 않아도 바로바로 빌드 결과를 확인할 수 있는 dev-server를 설정해보자.
+
+```bash
+# 터미널 명령어
+npm i -D webpack-dev-server
+```
+
+```javascript
+const config = {
+  devtool: 'eval-cheap-module-source-map',
+  target: 'web',
+  devServer: {
+    contentBase: path.resolve(dirname, 'dist'),
+    compress: true,
+    hot: false,
+    historyApiFallback: true,
+    liveReload: true,
+    open: true,
+    port: 5500,
+    watchContentBase: true,
+    watchOptions: {
+      poll: 1000,
+      ignored: /node_modules/,
+    },
+  },
+};
+```
+
+설정을 마치면 package.json에 script(명령어)를 추가해보자.
+
+```javascript
+// package.json
+
+"scripts": {
+  "start": "webpack serve --mode=production",
+  "start:dev": "webpack serve --mode=development",
+  "build": "webpack --mode=production",
+  "build:dev": "webpack --mode=production",
+},
+```
+
+## 전체 코드 보기
+
+```javascript
+// webpack.config.js
+import path from 'path';
+import { fileURLToPath } from 'url';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const config = {
+  entry: './src/js/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(dirname, 'dist'),
+    clean: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|pages)/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          {
+            loader: 'css-loader',
+            options: { import: true },
+          },
+        ],
+      },
+      {
+        test: /\.png$/,
+        type: 'asset/resource',
+      },
+    ],
+  },
+  plugins: [new HtmlWebpackPlugin({ template: './src/index.html' }), new MiniCssExtractPlugin()],
+  devtool: 'eval-cheap-module-source-map',
+  target: 'web',
+  devServer: {
+    contentBase: path.resolve(dirname, 'dist'),
+    compress: true,
+    hot: false,
+    historyApiFallback: true,
+    liveReload: true,
+    open: true,
+    port: 5500,
+    watchContentBase: true,
+    watchOptions: {
+      poll: 1000,
+      ignored: /node_modules/,
+    },
+  },
+};
+
+export default config;
+```
+
+```javascript
+// babel.js
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": "3.9"
+      }
+    ]
+  ]
+}
+```
+
+```javascript
+// package.json
+{
+  ...
+  "main": "src/js/index.js",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "start": "webpack serve --mode=production",
+    "start:dev": "webpack serve --mode=development",
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=production",
+  },
+  "dependencies": {
+    "core-js": "^3.9.1",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.1.3",
+    "cypress": "^6.7.1",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.3.9",
+    "webpack": "^5.26.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+}
+```
